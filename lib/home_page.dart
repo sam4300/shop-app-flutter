@@ -38,19 +38,16 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       body: Column(
         children: [
-          const Row(
+          Row(
             children: [
               Padding(
-                padding: EdgeInsets.all(12),
+                padding: const EdgeInsets.all(12),
                 child: Text(
                   'Shoes\nCollection',
-                  style: TextStyle(
-                    fontSize: 35,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: Theme.of(context).textTheme.titleLarge,
                 ),
               ),
-              Expanded(
+              const Expanded(
                 child: TextField(
                   decoration: InputDecoration(
                       hintText: 'Search',
@@ -106,6 +103,7 @@ class _HomePageState extends State<HomePage> {
                   image: products[index]['imageUrl'] as String,
                   title: products[index]['title'] as String,
                   price: products[index]['price'] as double,
+                  index: index,
                   backgroundColor: index.isEven
                       ? const Color.fromRGBO(216, 240, 253, 1)
                       : const Color.fromRGBO(245, 247, 249, 1),

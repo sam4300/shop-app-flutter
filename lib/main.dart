@@ -27,11 +27,24 @@ class MyApp extends StatelessWidget {
             fontWeight: FontWeight.bold,
             fontSize: 20,
           ),
+          titleLarge: TextStyle(
+            fontSize: 35,
+            fontWeight: FontWeight.bold,
+          ),
           bodySmall: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 16,
           ),
         ),
+        appBarTheme: const AppBarTheme(
+          titleTextStyle: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            color: Colors.black,
+          ),
+          centerTitle: true,
+        ),
+        useMaterial3: true,
       ),
       title: 'Shop App',
       debugShowCheckedModeBanner: false,
