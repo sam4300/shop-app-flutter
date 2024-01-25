@@ -24,7 +24,9 @@ class ProductCard extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) =>  ProductDetailScreen(product:products[index],),
+            builder: (context) => ProductDetailScreen(
+              product: products[index],
+            ),
           ),
         );
       },
