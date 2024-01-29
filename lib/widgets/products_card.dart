@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sho_app_flutter/global_variables.dart';
-import 'package:sho_app_flutter/product_detail_screen.dart';
+import 'package:sho_app_flutter/pages/product_detail_screen.dart';
 
 class ProductCard extends StatelessWidget {
   final String title;

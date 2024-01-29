@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sho_app_flutter/global_variables.dart';
-import 'package:sho_app_flutter/products_card.dart';
+import 'package:sho_app_flutter/widgets/products_card.dart';
 
 class ProductsPage extends StatefulWidget {
   const ProductsPage({super.key});

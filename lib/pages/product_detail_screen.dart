@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:sho_app_flutter/providers/cart_provider.dart';
 
 class ProductDetailScreen extends StatefulWidget {
   final Map<String, Object> product;
@@ -14,6 +16,39 @@ class ProductDetailScreen extends StatefulWidget {
 
 class _ProductDetailScreenState extends State<ProductDetailScreen> {
   int selectedSize = 0;
+  void onTap() {
+    try {
+      if (selectedSize != 0) {
+        Provider.of<CartProvider>(context, listen: false).addToCart({
+          'id': widget.product['id'],
+          'title': widget.product['title'],
+          'price': widget.product['price'],
+          'imageUrl': widget.product['imageUrl'],
+          'company': widget.product['company'],
+          'size': selectedSize
+        });
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Product added'),
+          ),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Please Select a size'),
+          ),
+        );
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(e.toString()),
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -63,13 +98,13 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         child: GestureDetector(
                           onTap: () {
                             setState(() {
-                              selectedSize = index;
+                              selectedSize = size;
                             });
                           },
                           child: Chip(
-                            backgroundColor: selectedSize == index
+                            backgroundColor: selectedSize == size
                                 ? Theme.of(context).colorScheme.primary
-                                : const Color.fromRGBO(245, 247, 249, 1),
+                                : null,
                             label: Text(
                               size.toString(),
                             ),
@@ -84,7 +119,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                     backgroundColor: Theme.of(context).colorScheme.primary,
                     minimumSize: const Size(double.infinity, 50),
                   ),
-                  onPressed: () {},
+                  onPressed: onTap,
                   icon: const Icon(
                     Icons.shopping_cart,
                     color: Colors.black,
