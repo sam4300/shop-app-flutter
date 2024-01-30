@@ -32,12 +32,12 @@ class ProductCard extends StatelessWidget {
       },
       child: Container(
         margin: const EdgeInsets.all(20),
-        padding: const EdgeInsets.all(12),
+        padding: const EdgeInsets.all(15),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20), color: backgroundColor),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Text(
               title,
@@ -50,7 +50,7 @@ class ProductCard extends StatelessWidget {
             Center(
               child: Image.asset(
                 image,
-                height: 175,
+                height: 150,
               ),
             )
           ],

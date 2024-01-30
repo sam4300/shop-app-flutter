@@ -10,16 +10,28 @@ class ProductsPage extends StatefulWidget {
 }
 
 class _ProductsPageState extends State<ProductsPage> {
-  final List<String> companies = const [
-    'All',
-    'Addidas',
-    'Nike',
-    'Puma',
-  ];
+  final Set<String> companies = {'All'};
+  void getCompanies() {
+    for (int i = 0; i < products.length; i++) {
+      companies.add((products[i]['company']).toString());
+    }
+  }
 
-  int selectedCompany = 0;
+  @override
+  void initState() {
+    super.initState();
+    getCompanies();
+  }
+
+  int selectedCompanyIndex = 0;
+  String selectedCompanyName = 'All';
+
   @override
   Widget build(BuildContext context) {
+    final List<Map<String, Object>> filteredProducts =
+        (products.where((element) => element['company'] == selectedCompanyName))
+            .toList();
+
     const border = OutlineInputBorder(
       borderSide: BorderSide(
         color: Color.fromARGB(225, 225, 225, 1),
@@ -65,11 +77,13 @@ class _ProductsPageState extends State<ProductsPage> {
                   child: GestureDetector(
                     onTap: () {
                       setState(() {
-                        selectedCompany = index;
+                        selectedCompanyIndex = index;
+                        selectedCompanyName =
+                            companies.elementAt(selectedCompanyIndex);
                       });
                     },
                     child: Chip(
-                      backgroundColor: selectedCompany == index
+                      backgroundColor: selectedCompanyIndex == index
                           ? Theme.of(context).colorScheme.primary
                           : const Color.fromRGBO(245, 247, 249, 1),
                       side: const BorderSide(
@@ -78,7 +92,7 @@ class _ProductsPageState extends State<ProductsPage> {
                       ),
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30)),
-                      label: Text(companies[index]),
+                      label: Text(companies.elementAt(index)),
                       labelStyle: const TextStyle(
                           fontSize: 16, fontWeight: FontWeight.bold),
                     ),
@@ -88,21 +102,66 @@ class _ProductsPageState extends State<ProductsPage> {
             ),
           ),
           Expanded(
-            child: ListView.builder(
-              itemCount: products.length,
-              itemBuilder: (context, index) {
-                return ProductCard(
-                  image: products[index]['imageUrl'] as String,
-                  title: products[index]['title'] as String,
-                  price: products[index]['price'] as double,
-                  index: index,
-                  backgroundColor: index.isEven
-                      ? const Color.fromRGBO(216, 240, 253, 1)
-                      : const Color.fromRGBO(245, 247, 249, 1),
-                );
+            child: LayoutBuilder(
+              builder: (context, constraint) {
+                if (constraint.maxWidth > 850) {
+                  return GridView.builder(
+                      itemCount: selectedCompanyName == 'All'
+                          ? products.length
+                          : filteredProducts.length,
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                        childAspectRatio: 1.70,
+                        crossAxisCount: 2,
+                      ),
+                      itemBuilder: (context, index) {
+                        return ProductCard(
+                            title: selectedCompanyName == 'All'
+                                ? (products[index]['title'].toString())
+                                : (filteredProducts[index]['title']).toString(),
+                            price: selectedCompanyName == 'All'
+                                ? double.parse(
+                                    products[index]['price'].toString())
+                                : double.parse(filteredProducts[index]['price']
+                                    .toString()),
+                            image: selectedCompanyName == 'All'
+                                ? (products[index]['imageUrl'].toString())
+                                : (filteredProducts[index]['imageUrl'])
+                                    .toString(),
+                            backgroundColor: index.isEven
+                                ? const Color.fromRGBO(216, 240, 253, 1)
+                                : const Color.fromRGBO(245, 247, 249, 1),
+                            index: index);
+                      });
+                } else {
+                  return ListView.builder(
+                    itemCount: selectedCompanyName == 'All'
+                        ? products.length
+                        : filteredProducts.length,
+                    itemBuilder: (context, index) {
+                      return ProductCard(
+                          title: selectedCompanyName == 'All'
+                              ? (products[index]['title'].toString())
+                              : (filteredProducts[index]['title']).toString(),
+                          price: selectedCompanyName == 'All'
+                              ? double.parse(
+                                  products[index]['price'].toString())
+                              : double.parse(
+                                  filteredProducts[index]['price'].toString()),
+                          image: selectedCompanyName == 'All'
+                              ? (products[index]['imageUrl'].toString())
+                              : (filteredProducts[index]['imageUrl'])
+                                  .toString(),
+                          backgroundColor: index.isEven
+                              ? const Color.fromRGBO(216, 240, 253, 1)
+                              : const Color.fromRGBO(245, 247, 249, 1),
+                          index: index);
+                    },
+                  );
+                }
               },
             ),
-          ),
+          )
         ],
       ),
     );

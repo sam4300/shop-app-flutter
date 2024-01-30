@@ -31,4 +31,12 @@ const products = [
     'company': 'Nike',
     'sizes': [8, 9, 10],
   },
+  {
+    'id': '2',
+    'title': 'Bata Women\'s Shoes',
+    'price': 28.95,
+    'imageUrl': 'assets/images/shoes_3.png',
+    'company': 'Bata',
+    'sizes': [8, 9, 10],
+  },
 ];

@@ -67,6 +67,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
           const Spacer(),
           Image.asset(
             widget.product['imageUrl'].toString(),
+            height: 250,
           ),
           const Spacer(
             flex: 2,
@@ -117,7 +118,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 ElevatedButton.icon(
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Theme.of(context).colorScheme.primary,
-                    minimumSize: const Size(double.infinity, 50),
+                    fixedSize: const Size(350, 50),
                   ),
                   onPressed: onTap,
                   icon: const Icon(
